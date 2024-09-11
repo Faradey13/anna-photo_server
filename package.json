@@ -36,6 +36,7 @@
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
     "crossenv": "^0.0.2-security",
+    "dotenv": "^16.4.5",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.12.0",

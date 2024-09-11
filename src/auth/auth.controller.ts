@@ -1,6 +1,5 @@
 import { Body, Controller, Post, Req, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { User } from "../user/user.model";
 import { newUserDto, userDto } from "../user/user.dto";
 
 @Controller()
@@ -22,14 +21,14 @@ export class AuthController {
 
   @Post("verify-token")
   async verifyToken(@Req() req: Request) {
+
     const authHeader = req.headers["authorization"];
-    console.log(authHeader);
+    console.log(`токен${authHeader}`)
     if (!authHeader) {
       throw new UnauthorizedException("Authorization header not provided");
     }
 
     const token = authHeader.split(" ")[1];
-    console.log(token)
     if (!token) {
       throw new UnauthorizedException("Token not provided");
     }

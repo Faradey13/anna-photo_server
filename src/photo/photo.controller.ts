@@ -7,19 +7,22 @@ import {
   Post,
   Res,
   UploadedFile,
-  UploadedFiles,
+  UploadedFiles, UseGuards,
   UseInterceptors
 } from "@nestjs/common";
 import { extname } from 'path';
 import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { Photo } from "./photo.model";
 import { PhotoService } from "./photo.service";
+import { AuthGuard } from "@nestjs/passport";
+import { JwtAuthGuard } from "../guards/JwtAuthGuard";
 
 
 @Controller('photo')
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('upload/:type')
   @UseInterceptors(FilesInterceptor('files', 300))
   async uploadFiles(@UploadedFiles() files: Express.Multer.File[], @Param('type') type: string): Promise<Photo[]> {
@@ -33,10 +36,11 @@ export class PhotoController {
     return this.photoService.getImagesByType(type);
   }
 
-
+  @UseGuards(JwtAuthGuard)
   @Post('/replace')
   @UseInterceptors(FileInterceptor('image'))
   async replaceImage(
+
     @Body('name_s') name_s: string,
     @UploadedFile() image: Express.Multer.File
   ) {
@@ -59,10 +63,11 @@ export class PhotoController {
     return await this.photoService.createFiles([image], 'main')
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:name_s')
-
   async deleteImage(@Param('name_s') name_s: string, @Body('type') type: string): Promise<string> {
-    console.log(name_s, type)
+    console.log(`имя.....${name_s}, тип.....${type}`)
+
     try {
       const baseName = name_s.split('.')[0]
       await this.photoService.deleteImageByName(baseName, type)
