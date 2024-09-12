@@ -15,6 +15,9 @@ import { TelegramModule } from './telegram/telegram.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`
     }),
     SequelizeModule.forRoot({
