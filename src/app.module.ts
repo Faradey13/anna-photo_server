@@ -9,6 +9,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from 'path';
 import { TelegramController } from './telegram/telegram.controller';
 import { TelegramModule } from './telegram/telegram.module';
+import { TextModule } from './text/text.module';
 
 
 
@@ -37,6 +38,7 @@ import { TelegramModule } from './telegram/telegram.module';
     UserModule,
     AuthModule,
     TelegramModule,
+    TextModule,
 
 
     ],
